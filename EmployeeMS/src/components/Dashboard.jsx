@@ -15,7 +15,8 @@ const Dashboard = () => {
     axios.get('http://localhost:3001/auth/admin_logout')
       .then(result => {
         if (result.data.status) {
-          navigate('/adminlogin');
+          localStorage.removeItem('adminLoggedIn');
+          navigate('/');
         } else {
           alert(result.data.error);
         }

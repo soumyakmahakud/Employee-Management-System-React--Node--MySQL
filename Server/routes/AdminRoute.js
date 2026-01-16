@@ -17,7 +17,7 @@ router.post('/adminlogin', (req, res) => {
         }
         if (result.length > 0) {
             const email = result[0].email;
-            const token = jwt.sign({ role: 'admin', email: email }, "jwt_secret_key", { expiresIn: '1d' });
+            const token = jwt.sign({ role: 'admin', email: email, id: result[0].id }, "jwt_secret_key", { expiresIn: '1d' });
             res.cookie('token', token);
             return res.json({ loginStatus: true, message: "Login successful" });
         } else {
@@ -239,10 +239,11 @@ router.get('/admin_records', (req, res) => {
 });
 
 
-
 router.get('/admin_logout', (req, res) => {
     res.clearCookie('token');
     return res.json({ status: true, message: "Logout successful" });
 });
+
+
 
 export { router as adminRouter }

@@ -1,11 +1,10 @@
-import React, { useState } from 'react'
-import './style.css'
 import axios from 'axios';
-import {useNavigate} from 'react-router-dom'
+import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 
-const Login = () => {
+const EmployeeLogin = () => {
 
-    const [values, setValues] = useState({
+  const [values, setValues] = useState({
         email: '',
         password: ''
     });
@@ -18,12 +17,12 @@ const Login = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         // console.log(values);
-        axios.post('http://localhost:3001/auth/adminlogin', values)
+        axios.post('http://localhost:3001/employee/employee_login', values)
         
         .then(result => {
             if(result.data.loginStatus){
-                localStorage.setItem('adminLoggedIn', true);
-            navigate('/dashboard');
+                sessionStorage.setItem('employeeLoggedIn', true);
+            navigate('/employee_dashboard/'+result.data.id);
             } else {
                 setError(result.data.error);
             }
@@ -34,8 +33,9 @@ const Login = () => {
         } )
     }
 
-    return (
-        <div className='d-flex justify-content-center align-items-center vh-100 loginPage'>
+
+  return (
+      <div className='d-flex justify-content-center align-items-center vh-100 loginPage'>
             <div className='p-3 rounded w-25 border loginForm'>
                 <div className='text-warning mb-3'>
                     {error && error}
@@ -59,7 +59,7 @@ const Login = () => {
                 </form>
             </div>
         </div>
-    )
+  )
 }
 
-export default Login
+export default EmployeeLogin
